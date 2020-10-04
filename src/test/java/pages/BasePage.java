@@ -1,13 +1,17 @@
 package pages;
 
+import java.net.MalformedURLException;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
+
+import com.google.common.collect.Multimap;
 
 import seleniumutils.Waits;
 import seleniumutils.customelements.ElementFactory;
+import utils.linkchecker.LinkChecker;
 
 /**
- * All your Page Objects should extend BasePage. It contains a generic constructor so its subclasses only need to call super(driver) in its construtors
+ * All your Page Objects should extend BasePage. It contains a generic constructor so its subclasses only need to call super(driver) in its constructors
  * instead of calling PageFactory directly.
  * Also acts as wrapper for all the Page Navigation methods (forward, back, refresh).
  * Contains generic methods that can be applied in any Page Object.
@@ -49,4 +53,10 @@ public abstract class BasePage {
 		driver.navigate().refresh();
 	}
 	
+	public Multimap<String, String> checkLinks() throws MalformedURLException {
+		LinkChecker lc = new LinkChecker(this.getDriver(), driver.getCurrentUrl());
+		lc.linkCheckerWithNavigation();
+		
+		return lc.getLinksFail();
+	}
 }

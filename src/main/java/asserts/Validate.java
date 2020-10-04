@@ -7,6 +7,13 @@ import org.testng.asserts.SoftAssert;
 
 import utils.Screenshots;
 
+/**
+ * Wrapper Class over TestNG's Soft Assert, that allows performing some additional tasks, such as Logging each validation
+ *  
+ * 
+ * @author Santiago Schumacher
+ *
+ */
 public class Validate extends SoftAssert {
 
 	private Screenshots screen = new Screenshots();

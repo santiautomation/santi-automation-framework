@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -39,7 +40,7 @@ public class Waits {
 	}
 	
 	public WebElement findElement(WebDriver driver, By locator, int seconds) {
-		return waitForCondition(driver, seconds, d -> d.findElement(locator));
+		return waitForCondition(driver, seconds, ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 	
 	public boolean isTextPresent(WebDriver driver, String text, int seconds) {

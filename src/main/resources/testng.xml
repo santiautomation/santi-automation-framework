@@ -2,12 +2,13 @@
   
 <suite name="Regression" verbose="1">
 	<listeners>
-        <listener class-name="testrunner.AnnotationTransformer"/>
-  </listeners>
-	<test name="Regression1" parallel="classes" thread-count="5">
-		<parameter name="driverName" value="CHROME" />
+        <listener class-name="testrunner.AnnotationTransformer"/> 
+        <!-- You can specify as many listeners as you have here, and it will be applied to the entire suite. -->
+  	</listeners>
+	<test name="Regression1" parallel="methods" thread-count="5">
+		<parameter name="driverName" value="CHROME" /> <!-- Sending parameter values through testng.xml -->
 		<packages>
-			<package name="tests" />
+			<package name="tests" /> <!-- Replace with the name of the package in which your tests reside -->
 		</packages>
 	</test>
 </suite>

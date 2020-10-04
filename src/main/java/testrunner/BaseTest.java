@@ -15,7 +15,7 @@ import listeners.TestMethodListener;
 import logging.Logging;
 import utils.Constants;
 
-@Listeners({TestMethodListener.class, AnnotationTransformer.class})
+@Listeners({TestMethodListener.class})
 public abstract class BaseTest implements Logging {
 	
 	protected static DriverManager driverManager;
