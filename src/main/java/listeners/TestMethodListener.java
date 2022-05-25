@@ -1,5 +1,7 @@
 package listeners;
 
+import asserts.Validate;
+import logging.Report;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestClass;
@@ -22,13 +24,11 @@ public class TestMethodListener implements IInvokedMethodListener, Logging {
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
 		if (method.isTestMethod()) {
-			Reporter.log("******************************************");
-			Reporter.log("Beginning execution of Test: " + method.getTestMethod().getMethodName(), true);
+			Report.logInfo("Beginning execution of Test: " + method.getTestMethod().getMethodName(), true);
 			
 			if (null != method.getTestMethod().getDescription() && !method.getTestMethod().getDescription().isEmpty()) {
-				Reporter.log(method.getTestMethod().getDescription(), true);
+				Report.logInfo(method.getTestMethod().getDescription(), true);
 			}
-			Reporter.log("******************************************");
 		}
 		
 	}
@@ -51,9 +51,20 @@ public class TestMethodListener implements IInvokedMethodListener, Logging {
 			} catch (AssertionError e) {
 				err = e;
 			}
-			if (null != err) {
+
+			if (null != err || null != testResult.getThrowable()) {
+				Report.logError("Error found during execution of the Test.", false);
+
+				if (null != err) {
+					Report.logError(err.getLocalizedMessage(), false);
+					testResult.setThrowable(err);
+				} else {
+					Report.logError(testResult.getThrowable().getLocalizedMessage(), false);
+				}
+
+				testCase.getValidator().printError(); // Add screenshot on Test Exception or other errors.
+
 				testResult.setStatus(TestResult.FAILURE);
-				testResult.setThrowable(err);
 			}
 
 		}

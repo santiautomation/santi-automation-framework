@@ -1,5 +1,6 @@
 package testrunner;
 
+import logging.Report;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -13,7 +14,7 @@ import utils.Constants;
  * @author Santiago Schumacher
  *
  */
-public class RetryAnalizer implements IRetryAnalyzer {
+public class RetryAnalyzer implements IRetryAnalyzer {
 
 	private int retryCount= 0;
     private int maxRetryCount = Constants.MAX_RETRY_COUNT;
@@ -21,7 +22,7 @@ public class RetryAnalizer implements IRetryAnalyzer {
     @Override
     public boolean retry(ITestResult result) {
         if (++retryCount < maxRetryCount) {
-            Reporter.log("Test failed. Retrying. Iteration: " + retryCount);
+            Report.log("Test failed. Retrying. Iteration: " + retryCount);
             return true;
         }
         return false;
