@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+  
+<suite name="Regression" verbose="1">
+	<parameter name="driverName" value="API" />
+	<listeners>
+        <listener class-name="testrunner.AnnotationTransformer"/>
+		<listener class-name="listeners.TestMethodListener"/>
+		<!-- You can specify as many listeners as you have here, and it will be applied to the entire suite. -->
+  	</listeners>
+
+	<test name="API Tests" parallel="methods" thread-count="20">
+
+		<classes>
+			<class name="tests.lotr.api.LotrMovieEndpointApiTests"></class>
+		</classes>
+	</test>
+</suite>

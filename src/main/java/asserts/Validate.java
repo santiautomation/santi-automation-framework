@@ -24,6 +24,8 @@ public class Validate extends SoftAssert {
 		this.d = driver;
 	}
 
+	public Validate() {} // Constructor for API Tests
+
 	@Override
     public void onAssertFailure(IAssert<?> a, AssertionError ex) {
 		this.printError();

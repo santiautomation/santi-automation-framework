@@ -1,11 +1,9 @@
-package tests;
+package tests.blaze;
 
 import logging.Report;
-import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
-import pages.BlazeBasePage;
+import pages.blaze.BlazeBasePage;
 import testrunner.BaseTest;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,6 +31,8 @@ public class SampleTest extends BaseTest {
 		Report.logInfo("Second seq test - class one second method in the list", false);
 		BlazeBasePage basePage = new BlazeBasePage(getDriver());
 
+		// Failing the test on purpose, just once,
+		// to validate that the Retry Implementation is working
 		if (exec.get() == 1) {
 			exec.incrementAndGet();
 			validate.assertTrue(!getDriver().getCurrentUrl().contains("demoblaze.com"), "Validating the current URL.");
@@ -42,11 +42,4 @@ public class SampleTest extends BaseTest {
 
 	}
 
-/*	@Test(description = "Test 3 of parallel tests", dependsOnMethods = { "testTwo" })
-	public void testThree() throws Exception {
-		Report.logInfo("Third test sequential - class one third method in the list", false);
-		BlazeBasePage basePage = new BlazeBasePage(getDriver());
-		validate.assertStringContains(getDriver().getCurrentUrl(), "demoblaze.com");
-	}*/
-	
 }

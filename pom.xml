@@ -53,7 +53,7 @@
 		<dependency> <!-- Needed for API testing -->
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>4.2.0</version>
+			<version>4.3.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.httpcomponents</groupId>
@@ -118,6 +118,10 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
+			<resource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>
@@ -128,6 +132,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
@@ -135,6 +140,10 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
+					<systemPropertyVariables>
+						<propertyName>driverName</propertyName>
+						<propertyValue>API</propertyValue>
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -153,16 +162,30 @@
 		<profile>
 			<id>qa-blaze</id>
 			<properties>
+				<application>blaze</application>
 				<url>http://demoblaze.com/</url> <!-- This value is dynamically replaced in your properties file depending on your selected Profile. -->
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+
 		</profile>
 		<profile>
 			<id>prod-blaze</id>
 			<properties>
+				<application>blaze</application>
 				<url>http://productionurl.com/</url>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod-google</id>
+			<properties>
+				<application>google</application>
+				<url>https://www.google.com/</url>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod-lotr-api</id>
+			<properties>
+				<application>lotr</application>
+				<url>https://the-one-api.dev/v2</url>
 			</properties>
 		</profile>
 	</profiles>

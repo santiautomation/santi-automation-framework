@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import com.google.common.collect.Multimap;
 
-import pages.BlazeBasePage;
+import pages.blaze.BlazeBasePage;
 import testrunner.BaseTest;
 
 public class CheckLinks extends BaseTest {

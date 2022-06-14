@@ -15,7 +15,8 @@ import driver.DriverManager;
 import listeners.TestMethodListener;
 import logging.Logging;
 import utils.Architecture;
-import utils.Constants;
+import utils.Context;
+import utils.PropertyReader;
 
 import java.lang.reflect.Method;
 
@@ -25,8 +26,12 @@ public abstract class BaseTest implements Logging {
 	protected static DriverManager driverManager;
 	protected static final ExtentReports extent = new ExtentReports();
 	protected ThreadLocal<ExtentTest> te = new ThreadLocal<>();
+	protected Context context = new Context();
 	protected Validate validate;
+	public static PropertyReader properties = new PropertyReader();
+
 	private static String driverName;
+	private boolean isApi = false;
 
 	@BeforeSuite
 	@Parameters({"driverName"})
@@ -39,7 +44,13 @@ public abstract class BaseTest implements Logging {
 		extent.setSystemInfo("64 bits", String.valueOf(Architecture.is64bits()));
 		extent.setSystemInfo("Driver", driverName);
 
+		if (driverName.toUpperCase().contains("API")) {
+			this.setApi(true);
+		}
+
 		setDriverName(driverName);
+
+		properties = new PropertyReader();
 	}
 
 	@AfterSuite
@@ -54,15 +65,21 @@ public abstract class BaseTest implements Logging {
 
 		Report.setCurrentTest(te.get());
 
-		initializeDriverManager(getDriverName());
-
-		validate = new Validate(this.getDriver());		
-		driverManager.getDriver().navigate().to(Constants.getContextUrl());
+		if (this.isApi()) {
+			validate = new Validate();
+		} else {
+			initializeDriverManager(getDriverName());
+			validate = new Validate(this.getDriver());
+			driverManager.getDriver().navigate().to(context.getContextUrl());
+		}
 	}
 
 	@AfterMethod
 	protected void cleanUp() {
-		driverManager.quitDriver();
+		if (!this.isApi()) {
+			driverManager.quitDriver();
+		}
+
 		extent.addTestRunnerOutput(Reporter.getOutput());
 	}
 
@@ -93,4 +110,8 @@ public abstract class BaseTest implements Logging {
 	protected WebDriver getDriver() {
 		return driverManager.getDriver();
 	}
+
+	public boolean isApi() { return isApi; }
+
+	public void setApi(boolean api) { isApi = api; }
 }

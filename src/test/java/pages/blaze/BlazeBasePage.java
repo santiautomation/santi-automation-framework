@@ -1,11 +1,10 @@
-package pages;
+package pages.blaze;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import seleniumutils.customelements.Element;
+import pages.BasePage;
 import seleniumutils.customelements.LogElement;
 
 public class BlazeBasePage extends BasePage {

@@ -4,6 +4,7 @@
 *.classpath
 *.settings
 *.project
+.idea/
 screenshots/
 test-output/
 
